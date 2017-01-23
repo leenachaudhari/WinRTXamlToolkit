@@ -97,9 +97,34 @@ namespace WinRTXamlToolkit.Sample.Views
             this.RunIfSelected(this.StackedBar100, () => ((Stacked100BarSeries)this.StackedBar100.Series[0]).SeriesDefinitions[1].ItemsSource = items2);
             this.RunIfSelected(this.StackedBar100, () => ((Stacked100BarSeries)this.StackedBar100.Series[0]).SeriesDefinitions[2].ItemsSource = items3);
 
-            this.RunIfSelected(this.StackedColumn, () => ((StackedColumnSeries)this.StackedColumn.Series[0]).SeriesDefinitions[0].ItemsSource = items1);
-            this.RunIfSelected(this.StackedColumn, () => ((StackedColumnSeries)this.StackedColumn.Series[0]).SeriesDefinitions[1].ItemsSource = items2);
-            this.RunIfSelected(this.StackedColumn, () => ((StackedColumnSeries)this.StackedColumn.Series[0]).SeriesDefinitions[2].ItemsSource = items3);
+            this.RunIfSelected(this.StackedColumn,
+                () =>
+                {
+                    var series = (StackedColumnSeries)this.StackedColumn.Series[0];
+                    series.SeriesDefinitions[0].ItemsSource = items1;
+                    series.SeriesDefinitions[1].ItemsSource = items2;
+                    series.SeriesDefinitions[2].ItemsSource = items3;
+                    series.LegendItems.Clear();
+
+                    if (!this.axisLabelsHidden)
+                    {
+                        series.DependentAxis =
+                            new LinearAxis
+                            {
+                                Minimum = 0,
+                                Maximum = 100,
+                                Orientation = AxisOrientation.Y,
+                                Interval = 20,
+                                ShowGridLines = false,
+                                Width = 0
+                            };
+                        this.axisLabelsHidden = true;
+                    }
+                });
+
+            //this.RunIfSelected(this.StackedColumn, () => ((StackedColumnSeries)this.StackedColumn.Series[0]).SeriesDefinitions[0].ItemsSource = items1);
+            //this.RunIfSelected(this.StackedColumn, () => ((StackedColumnSeries)this.StackedColumn.Series[0]).SeriesDefinitions[1].ItemsSource = items2);
+            //this.RunIfSelected(this.StackedColumn, () => ((StackedColumnSeries)this.StackedColumn.Series[0]).SeriesDefinitions[2].ItemsSource = items3);
 
             this.RunIfSelected(this.StackedColumn100, () => ((Stacked100ColumnSeries)this.StackedColumn100.Series[0]).SeriesDefinitions[0].ItemsSource = items1);
             this.RunIfSelected(this.StackedColumn100, () => ((Stacked100ColumnSeries)this.StackedColumn100.Series[0]).SeriesDefinitions[1].ItemsSource = items2);
